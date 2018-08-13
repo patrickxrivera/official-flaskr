@@ -12,7 +12,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 def register():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form('password')
+        password = request.form['password']
         db = get_db()
         error = None
 
@@ -25,7 +25,7 @@ def register():
         ).fetchone() is not None:
             error = 'User {} is already registered'.format(username)
 
-        if error is not None:
+        if error is None:
             db.execute(
                 'INSERT INTO user (username, password) VALUES (?, ?)',
                 (username, generate_password_hash(password))
